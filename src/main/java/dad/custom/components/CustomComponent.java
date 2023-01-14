@@ -23,8 +23,8 @@ public class CustomComponent extends GridPane implements Initializable {
 	private static final DateFormat FORMATTER = new SimpleDateFormat("MMMM");
 
 	// model
-	private IntegerProperty monthProperty = new SimpleIntegerProperty();
-	private IntegerProperty yearProperty = new SimpleIntegerProperty();
+	private IntegerProperty month = new SimpleIntegerProperty();
+	private IntegerProperty year = new SimpleIntegerProperty();
 
 	// view
 	@FXML
@@ -39,7 +39,7 @@ public class CustomComponent extends GridPane implements Initializable {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CustomComponent.fxml"));
 			loader.setController(this);
-//			loader.setRoot(this);
+			loader.setRoot(this);
 			loader.load();
 
 		} catch (IOException e) {
@@ -49,22 +49,22 @@ public class CustomComponent extends GridPane implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.monthProperty.addListener((o, ov, nv) -> onDateChanged(o, ov, nv));
-		this.yearProperty.addListener((o, ov, nv) -> onDateChanged(o, ov, nv));
+		this.month.addListener((o, ov, nv) -> onDateChanged(o, ov, nv));
+		this.year.addListener((o, ov, nv) -> onDateChanged(o, ov, nv));
 
 	}
 
 	private void onDateChanged(ObservableValue<? extends Number> o, Number ov, Number nv) {
 
-		int first = DateUtils.firstDay(yearProperty.get(), monthProperty.get()) - 1;
-		int last = DateUtils.lastDay(yearProperty.get(), monthProperty.get());
+		int first = DateUtils.firstDay(year.get(), month.get()) - 1;
+		int last = DateUtils.lastDay(year.get(), month.get());
 		for (int i = 0; i < first; i++) {
 			daysLabelList.get(i).setText("");
 			daysLabelList.get(i).getStyleClass().remove("today");
 		}
 		for (int i = first, j = 1; i < first + last; i++, j++) {
 			daysLabelList.get(i).setText("" + j);
-			if (LocalDate.of(yearProperty.get(), monthProperty.get(), j).equals(LocalDate.now())) {
+			if (LocalDate.of(year.get(), month.get(), j).equals(LocalDate.now())) {
 				daysLabelList.get(i).getStyleClass().add("today");
 			} else {
 				daysLabelList.get(i).getStyleClass().remove("today");
@@ -74,33 +74,33 @@ public class CustomComponent extends GridPane implements Initializable {
 			daysLabelList.get(i).setText("");
 			daysLabelList.get(i).getStyleClass().remove("today");
 		}
-		Date day = DateUtils.newDate(yearProperty.get(), monthProperty.get(), 1);
+		Date day = DateUtils.newDate(year.get(), month.get(), 1);
 		monthLabel.setText(FORMATTER.format(day));
 
 	}
 
-	public final IntegerProperty monthPropertyProperty() {
-		return this.monthProperty;
+	public final IntegerProperty monthProperty() {
+		return this.month;
 	}
 
-	public final int getMonthProperty() {
-		return this.monthPropertyProperty().get();
+	public final int getMonth() {
+		return this.monthProperty().get();
 	}
 
-	public final void setMonthProperty(final int monthProperty) {
-		this.monthPropertyProperty().set(monthProperty);
+	public final void setMonth(final int month) {
+		this.monthProperty().set(month);
 	}
 
-	public final IntegerProperty yearPropertyProperty() {
-		return this.yearProperty;
+	public final IntegerProperty yearProperty() {
+		return this.year;
 	}
 
-	public final int getYearProperty() {
-		return this.yearPropertyProperty().get();
+	public final int getYear() {
+		return this.yearProperty().get();
 	}
 
-	public final void setYearProperty(final int yearProperty) {
-		this.yearPropertyProperty().set(yearProperty);
+	public final void setYear(final int year) {
+		this.yearProperty().set(year);
 	}
 
 }

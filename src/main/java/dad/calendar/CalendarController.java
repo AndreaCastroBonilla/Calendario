@@ -40,13 +40,13 @@ public class CalendarController implements Initializable {
 	private CustomComponent[] calendarComponents;
 
 	@FXML
-	private GridPane monthPane;
-
-	@FXML
 	private BorderPane view;
 
 	@FXML
 	private Label yearLabel;
+
+	@FXML
+	private GridPane monthPane;
 
 	@FXML
 	private Button previousButton, nextButton;
@@ -68,8 +68,8 @@ public class CalendarController implements Initializable {
 			int col = month % COLUMNS;
 			int row = month / COLUMNS;
 			calendarComponents[month] = new CustomComponent();
-			calendarComponents[month].setMonthProperty(month + 1);
-			calendarComponents[month].yearPropertyProperty().bind(year);
+			calendarComponents[month].setMonth(month + 1);
+			calendarComponents[month].yearProperty().bind(year);
 			monthPane.add(calendarComponents[month], col, row);
 		}
 
